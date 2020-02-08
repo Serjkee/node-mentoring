@@ -1,45 +1,35 @@
 import * as express from 'express';
-import crudService from '../crudService/crudSrvice';
-import userSchema from '../schema/userSchema';
+import crudService from '../services/crudSrvice';
 
 const userRouter = express.Router();
 
-userRouter.get('/', (req, res) => {
-  res.send(crudService.getAllUsers());
+userRouter.get('/', async (req, res) => {
+  const allDataFromDb = await crudService.getAllUsers();
+  res.send(allDataFromDb);
 });
 
-userRouter.get('/user/:id', (req, res) => {
-  const userFromDataset = crudService.getUser(req.params.id);
-  res.send(userFromDataset.length ? userFromDataset : 'No user found!');
+userRouter.get('/user/:id', async (req, res) => {
+  const userFromDataset = await crudService.getUser(req.params.id);
+  res.send(userFromDataset || 'No user found!');
 });
 
-userRouter.get('/userAuto/:id', (req, res) => {
-  const userSuggestions = crudService.getAutoSeggestions(req.params.id);
+userRouter.get('/userAuto/:id', async (req, res) => {
+  const userSuggestions = await crudService.getAutoSeggestions(req.params.id);
   res.send(userSuggestions);
 });
 
-userRouter.post('/user', (req, res) => {
-  const { error } = userSchema.validate(req.body);
-  if (error !== null) {
-    res.status(400).send(error.details[0].message);
-  } else {
-    const user = crudService.createUser(req.body);
-    res.send(user);
-  }
+userRouter.post('/user', async ({body}, res) => {
+  const createdUser = await crudService.createUser(body);
+  res.send(createdUser);
 });
 
-userRouter.put('/user', (req, res) => {
-  const { error } = userSchema.validate(req.body);
-  if (error !== null) {
-    res.status(400).send(error.details[0].message);
-  } else {
-    const user = crudService.updateUser(req.body);
-    res.send(user);
-  }
+userRouter.put('/user', async (req, res) => {
+  const user = await crudService.updateUser(req.body);
+  res.send(user);
 });
 
-userRouter.delete('/user/:id', (req, res) => {
-  crudService.deleteUser(req.params.id);
+userRouter.delete('/user/:id', async (req, res) => {
+  await crudService.deleteUser(req.params.id);
   res.send('Successfully deleted the user!');
 });
 
