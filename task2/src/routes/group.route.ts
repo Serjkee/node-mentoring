@@ -5,6 +5,7 @@ const groupRouter = express.Router();
 
 groupRouter.get('/group/:id', async (req, res) => {
   const groupById = await groupService.getGroupById(req.params.id);
+  if(!groupById) res.status(404);
   res.send(groupById || 'No group found!');
 });
 
@@ -14,7 +15,6 @@ groupRouter.get('/group', async (req, res) => {
 });
 
 groupRouter.post('/group', async ({ body }, res) => {
-  console.log(body);
   const createdGroup = await groupService.createGroup(body);
   res.send(createdGroup);
 });
