@@ -5,6 +5,12 @@ import seq from './models/index';
 
 import { app, port } from './server';
 
+import Group from './models/group';
+import User from './models/user';
+const Sequelize = require('Sequelize');
+
+const Model = Sequelize.Model;
+
 seq
   .authenticate()
   .then(() => {
@@ -13,6 +19,9 @@ seq
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+User.belongsToMany(Group, { through: 'UserProject' });
+Group.belongsToMany(User, { through: 'UserProject' });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
