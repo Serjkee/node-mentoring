@@ -1,6 +1,8 @@
 import seq from "./index";
 const Sequelize = require('Sequelize');
 
+import UserGroup from './userGroup';
+
 const Model = Sequelize.Model;
 class User extends Model { }
 User.init({
@@ -27,5 +29,9 @@ User.init({
   modelName: 'user',
   timestamps: false
 });
+
+User.associate = model => {
+  User.belongsToMany(model.Group, { through: UserGroup });
+}
 
 export default User;
