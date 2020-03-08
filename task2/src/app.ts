@@ -5,6 +5,9 @@ import seq from './models/index';
 
 import { app, port } from './server';
 
+import Group from './models/group';
+import User from './models/user';
+
 seq
   .authenticate()
   .then(() => {
@@ -13,6 +16,17 @@ seq
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+console.log(User.findOne({
+  where: {
+    id: "mmmmm",
+  }
+}, {
+  include: [{
+    model: Group,
+    as: 'Groups'
+  }],
+}).then(item => console.log(item)))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
