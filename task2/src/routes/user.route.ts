@@ -1,6 +1,8 @@
 import * as express from 'express';
 import crudService from '../services/userService';
 
+import { userAuth } from '../services/authService'
+
 const userRouter = express.Router();
 
 userRouter.get('/user', async (req, res) => {
@@ -8,7 +10,7 @@ userRouter.get('/user', async (req, res) => {
   res.send(allDataFromDb);
 });
 
-userRouter.get('/user/:id', async (req, res) => {
+userRouter.get('/user/:id', userAuth, async (req, res) => {
   const userFromDataset = await crudService.getUser(req.params.id);
   if (!userFromDataset) res.status(404);
   res.send(userFromDataset || 'No user found!');
