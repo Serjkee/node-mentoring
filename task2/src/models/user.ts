@@ -1,22 +1,20 @@
 import seq from "./index";
 const Sequelize = require('Sequelize');
 
-import UserGroup from './userGroup';
-import Group from './group';
-
-const Model = Sequelize.Model;
-class User extends Model { }
-User.init({
+const User = seq.define('user', {
   id: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
     allowNull: false
   },
   login: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   password: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   age: {
     type: Sequelize.INTEGER
@@ -24,19 +22,6 @@ User.init({
   isDeselected: {
     type: Sequelize.BOOLEAN
   }
-}, {
-  sequelize: seq,
-  tableName: 'user',
-  modelName: 'user',
-  timestamps: false
-});
-
-User.associate = model => {
-  User.belongsToMany(model.Group, {
-    through: UserGroup,
-    foreignkey: 'id',
-    as: 'Groups'
-  });
-}
+}, { timestamps: false, freezeTableName: true });
 
 export default User;

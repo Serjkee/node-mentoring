@@ -1,36 +1,20 @@
 import seq from "./index";
 const Sequelize = require('Sequelize');
 
-import UserGroup from './userGroup';
-import User from './user';
-
-const Model = Sequelize.Model;
-class Group extends Model { }
-Group.init({
+const Group = seq.define('group', {
   id: {
-    type: Sequelize.STRING,
-    primaryKey: true,
-    allowNull: false
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
   },
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   permissions: {
     type: Sequelize.ARRAY
   }
-}, {
-  sequelize: seq,
-  tableName: 'group',
-  modelName: 'group',
-  timestamps: false
-});
-
-Group.associate = model => {
-  Group.belongsToMany(model.User, {
-    through: UserGroup,
-    foreignkey: 'id',
-    as: 'Users'
-  });
-}
+}, { timestamps: false, freezeTableName: true });
 
 export default Group;
+

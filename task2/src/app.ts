@@ -7,6 +7,7 @@ import { app, port } from './server';
 
 import Group from './models/group';
 import User from './models/user';
+import UserGroup from './models/userGroup';
 
 seq
   .authenticate()
@@ -17,16 +18,16 @@ seq
     console.error('Unable to connect to the database:', err);
   });
 
-console.log(User.findOne({
-  where: {
-    id: "mmmmm",
-  }
-}, {
-  include: [{
-    model: Group,
-    as: 'Groups'
-  }],
-}).then(item => console.log(item)))
+console.log(Group, User, UserGroup)
+// console.log(User.findAll({
+//   include: [{
+//     model: Group,
+//     through: {
+//       attributes: ['createdAt', 'startedAt', 'finishedAt'],
+//       where: { id: 'asd' }
+//     }
+//   }]
+// }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
