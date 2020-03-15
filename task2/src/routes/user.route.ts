@@ -1,15 +1,16 @@
 import * as express from 'express';
-import crudService from '../services/crudSrvice';
+import crudService from '../services/userService';
 
 const userRouter = express.Router();
 
-userRouter.get('/', async (req, res) => {
+userRouter.get('/user', async (req, res) => {
   const allDataFromDb = await crudService.getAllUsers();
   res.send(allDataFromDb);
 });
 
 userRouter.get('/user/:id', async (req, res) => {
   const userFromDataset = await crudService.getUser(req.params.id);
+  if (!userFromDataset) res.status(404);
   res.send(userFromDataset || 'No user found!');
 });
 
