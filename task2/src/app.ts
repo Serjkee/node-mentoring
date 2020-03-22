@@ -1,5 +1,6 @@
 const passport = require('passport');
 const cors = require('cors');
+const dotenv = require('dotenv').config();
 import * as express from 'express';
 import userRouter from './routes/user.route';
 import groupRouter from './routes/group.route';
