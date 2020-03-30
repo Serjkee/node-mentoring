@@ -3,7 +3,7 @@ import UserModel from '../../models/user';
 
 jest.mock('../../utils/logger');
 
-describe('UserModel test', () => {
+describe('UserModel', () => {
   test('Calls findAll method on GetAllGroups', () => {
     UserModel.findAll = jest.fn(mock => Promise.resolve('mock'));
 
@@ -19,7 +19,7 @@ describe('UserModel test', () => {
     expect(UserModel.findOne).toHaveBeenCalledTimes(1);
     expect(UserModel.findOne).toHaveBeenCalledWith({
       where: {
-        id: id
+        id,
       }
     })
   });

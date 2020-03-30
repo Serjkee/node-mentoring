@@ -4,7 +4,7 @@ import GroupModel from '../../models/group';
 
 jest.mock('../../utils/logger');
 
-describe('GroupService test', () => {
+describe('GroupService', () => {
   test('Calls findAll method on GetAllGroups', () => {
     GroupModel.findAll = jest.fn(mock => Promise.resolve('mock'));
 
@@ -18,6 +18,6 @@ describe('GroupService test', () => {
 
     GroupService.getGroupById(id);
     expect(GroupModel.findOne).toHaveBeenCalledTimes(1);
-    expect(GroupModel.findOne).toHaveBeenCalledWith({ where: { id: id } })
+    expect(GroupModel.findOne).toHaveBeenCalledWith({ where: { id } })
   });
 })
