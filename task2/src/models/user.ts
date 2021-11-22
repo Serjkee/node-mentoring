@@ -1,19 +1,20 @@
 import seq from "./index";
 const Sequelize = require('Sequelize');
 
-const Model = Sequelize.Model;
-class User extends Model { }
-User.init({
+const User = seq.define('user', {
   id: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
     allowNull: false
   },
   login: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   password: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   age: {
     type: Sequelize.INTEGER
@@ -21,11 +22,6 @@ User.init({
   isDeselected: {
     type: Sequelize.BOOLEAN
   }
-}, {
-  sequelize: seq,
-  tableName: 'user',
-  modelName: 'user',
-  timestamps: false
-});
+}, { timestamps: false, freezeTableName: true });
 
 export default User;

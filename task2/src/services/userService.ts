@@ -1,4 +1,4 @@
-import { User } from '../types/userData';
+import { User } from '../types/user';
 import UserModel from '../models/user';
 const Sequelize = require('Sequelize');
 const Op = Sequelize.Op;
